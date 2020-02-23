@@ -12,17 +12,17 @@ Home
 ## 项目介绍
 
 **项目技术**
-- [开发框架:Springboot +Thymeleaf模板 ]
-- [日志框架：logback]
-- [Json解析框架：Jackson]
-- [API接口调用：HttpClient]
-- [项目依赖包：maven]
+- 开发框架:Springboot +Thymeleaf模板 
+- 日志框架：logback
+- Json解析框架：Jackson
+- API接口调用：HttpClient]
+- 项目依赖包：maven
 
 **运行项目**
-      本地运行
+      - 本地运行
                    mvn clean package
                    直接执行ThymeleafApplication Main 函数
-      Docker 部署
+     -  Docker 部署
                    docker build -t  backend .
                    docker run  -d -i  --name=backend  -p 8989:8989  backend
 
