@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head th:replace="fragments :: head(title=~{::title/text()})">
+	</head>
+	<body>
+		<div class="container">
+			<div th:replace="fragments :: navbar"></div>
+			<div >
+				<div class="form-group">
+					    <div class="col-sm-6">
+					         <select class="form-control" id="cityName" onchange="changeCity()">
+								<option value="">Please Select</option>
+								<option  th:each="citys:${session.cityList}"
+											 th:value="${citys.key}"
+											 th:text="${citys.value}">
+				             </select>
+					    </div>
+				</div>
+			</div>
+			<div th:fragment="displayPage" id="displayPage">
+				<table class="table table-bordered table-striped">
+					<tbody>
+					<tr >
+						<td width="20%" >City</td>
+						<td th:text="${data?.city}" ></td>
+					</tr>
+					<tr >
+						<td width="20%" >Updated Time</td>
+						<td th:text="${data?.displayChinaDate}" ></td>
+<!--						<td th:text="${data?.date}" ></td>-->
+					</tr>
+					<tr >
+						<td width="20%" >Weather</td>
+						<td th:text="${data?.weather}" ></td>
+					</tr>
+					<tr >
+						<td width="20%" >Temperature</td>
+						<td th:text="${data?.tmp}" ></td>
+					</tr>
+					<tr >
+						<td width="20%" >Wind</td>
+						<td  th:text="${data?.speed}" >km/h</td>
+					</tr>
+				    </tbody>
+			</table>
+			</div>
+		</div>
+	</body>
+</html>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script>
+	function changeCity() {
+       var url = "/list?cityName=" + $('#cityName').val();
+       $('#displayPage').load(url);
+    }
+</script>
