@@ -11,7 +11,6 @@ public class Until {
         Date date = sdf.parse(strDate);
         return date;
     }
-
     public static String append(String str1, String str2) {
         StringBuilder result = new StringBuilder();
         result.append(str1);

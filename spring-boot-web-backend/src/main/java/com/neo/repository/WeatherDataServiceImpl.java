@@ -59,7 +59,6 @@ public class WeatherDataServiceImpl implements WeatherDataService {
         cashMap.clear();
         log.info("Clear Cache ,Time :{}" ,LocalDateTime.now());
     }
-
     /**
      * invoke weather api
      * @param uri
