@@ -16,7 +16,7 @@ Home
 - 日志框架：logback
 - Json解析框架：Jackson
 - API接口调用：HttpClient
-- 项目依赖包：maven
+- 项目依赖：maven
 
 **运行项目**
 
