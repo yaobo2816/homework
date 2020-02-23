@@ -65,7 +65,7 @@ public class WeatherDataServiceImpl implements WeatherDataService {
      * @param uri
      * @param city
      * @return
-     */
+     */  
     private HourlyForecast doGetWeatherData(String uri,String city){
         ObjectMapper mapper = new ObjectMapper();
         HourlyForecast obj = new HourlyForecast();
