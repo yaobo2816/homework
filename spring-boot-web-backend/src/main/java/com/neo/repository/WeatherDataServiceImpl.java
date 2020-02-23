@@ -26,24 +26,29 @@ import java.util.stream.Collectors;
 @Service
 @Configuration
 @EnableScheduling
-public class WeatherDataServiceImpl implements  WeatherDataService {
+public class WeatherDataServiceImpl implements WeatherDataService {
     @Autowired
     private RestTemplate restTemplate;
     private static final Logger log =
             LoggerFactory.getLogger(WeatherDataServiceImpl.class);
     private final String WEATHER_API = "https://way.jd.com/he/hourly?lang=en&appkey=2a624ff2758abe5fc9f6d792c118fd46";
     //mockup Cache
-    Map<String,List<HourlyForecast>> cashMap = new HashMap<>();
+    Map<String, List<HourlyForecast>> cashMap = new HashMap<>();
+    private final String DEGREE = " °C";
+    private final String KEY = "txt";
+    private final String SPEEDKEY = "spd";
+    private final String UNIT = "km/h";
 
     /**
      * get weather data
+     *
      * @param city
      * @return
      */
     public HourlyForecast getDataByCityName(String city) {
         String uri = WEATHER_API + "&city=" + city;
-        log.info("uri :{}",uri );
-        return this.doGetWeatherData(uri,city);
+        log.info("uri :{}", uri);
+        return this.doGetWeatherData(uri, city);
     }
 
     /**
@@ -79,28 +84,32 @@ public class WeatherDataServiceImpl implements  WeatherDataService {
             strBody = response.getBody();
             log.info("body:{}",strBody);
         }
-        try{
+        try {
             weatherResponse = mapper.readValue(strBody, WeatherResponse.class);
-        }catch (IOException e){
+        } catch (IOException e) {
             log.error(e.getMessage());
             e.printStackTrace();
         }
-        if(StringUtils.isEmpty(weatherResponse) ){
+        if (StringUtils.isEmpty(weatherResponse)) {
             return obj;
         }
         List<HourlyForecast> hfList = weatherResponse.getResult().getHeWeather5().get(0).getHourly_forecast();
-        hfList.stream().peek(item->{
-            item.setWeather(item.getCond().get("txt").toString());
-            item.setSpeed(item.getWind().get("spd").toString()+"km/h");
-            item.setTmp(item.getTmp()+" °C");
+        hfList.stream().peek(item -> {
+            if (StringUtils.isEmpty(item)) {
+                return;
+            }
             try {
+                item.setWeather(item.getCond().get(KEY).toString());
+                item.setSpeed(Until.append(item.getWind().get(SPEEDKEY).toString(), UNIT));
+                item.setTmp(Until.append(item.getTmp(), DEGREE));
                 item.setChinaDate(Until.changeHour(item.getDate()));
                 item.setDisplayChinaDate(Until.formatDate(item.getChinaDate()));
-            } catch (ParseException e) {
+                item.setCity(city);
+            } catch (Exception e) {
                 log.error(e.getMessage());
                 e.printStackTrace();
             }
-            item.setCity(city);
+
         }).collect(Collectors.toList());
         cashMap.put(cashKey,hfList);
         obj = filterTime(hfList,obj);
