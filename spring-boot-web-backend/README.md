@@ -21,12 +21,12 @@ Home
 **运行项目**
 ---
 - 本地运行
-                   - mvn clean package
-                  -  直接执行ThymeleafApplication Main 函数
+ - mvn clean package
+ -  直接执行ThymeleafApplication Main 函数
 ---
 - Docker 部署
-                   - docker build -t  backend .
-                   - docker run  -d -i  --name=backend  -p 8989:8989  backend
+- docker build -t  backend .
+- docker run  -d -i  --name=backend  -p 8989:8989  backend
 
 **项目文档**
 - 项目文档目录：spring-boot-web-backend/document
