@@ -15,7 +15,7 @@ Home
 - 开发框架:Springboot +Thymeleaf模板 
 - 日志框架：logback
 - Json解析框架：Jackson
-- API接口调用：HttpClient]
+- API接口调用：HttpClient
 - 项目依赖包：maven
 
 **运行项目**
